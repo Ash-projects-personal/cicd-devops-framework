@@ -1,0 +1,11 @@
+name: Example caller (smoke)
+on:
+  workflow_dispatch:
+jobs:
+  call-pipeline:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      ecr-repository: example-app
+      ecs-cluster: example-cluster
+      ecs-service: example-service
+    secrets: inherit

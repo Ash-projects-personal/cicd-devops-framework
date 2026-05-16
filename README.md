@@ -8,4 +8,27 @@ Includes SonarQube for static code analysis (SAST) which reduced critical vulner
 
 Also implemented blue-green deployment strategy with automated rollback triggers based on CloudWatch alarm thresholds, which reduced deployment-related incidents by 85%.
 
-The workflow file is in github_workflows_example/workflows/deploy.yml. Just move it to .github/workflows/ in any Python or Node project, configure the GitHub secrets, and it runs on push to main.
+## Two ways to use it
+
+**1. Reusable workflow** — call `.github/workflows/deploy.yml` from any consumer repo:
+
+```yaml
+jobs:
+  ship:
+    uses: Ash-projects-personal/cicd-devops-framework/.github/workflows/deploy.yml@main
+    with:
+      ecr-repository: my-app
+      ecs-cluster: my-cluster
+      ecs-service: my-service
+    secrets: inherit
+```
+
+**2. Composite action** — for just the scan+test phase:
+
+```yaml
+- uses: Ash-projects-personal/cicd-devops-framework@main
+  with:
+    python-version: "3.11"
+    coverage-threshold: "85"
+```
+
